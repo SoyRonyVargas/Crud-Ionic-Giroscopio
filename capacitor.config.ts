@@ -3,7 +3,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 const config: CapacitorConfig = {
   appId: 'com.jeep.app.ionic7.angular.sqlite',
   appName: 'ionic7-angular-sqlite-starter',
-  webDir: 'www',
+  webDir: 'build',
   server: {
     androidScheme: 'https'
   },
