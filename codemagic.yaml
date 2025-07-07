@@ -5,7 +5,7 @@ workflows:
     environment:
       vars:
         PACKAGE_NAME: "com.tuempresa.tuapp"
-      node: 18
+      node: 22
       java: 11
     scripts:
       - name: Install Ionic CLI

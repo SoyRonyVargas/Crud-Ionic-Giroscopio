@@ -108,7 +108,7 @@ const ProductListPage: React.FC = () => {
       <IonContent  className="ion-padding-horizontal !h-full !min-h-screen">
         {/* Barra de búsqueda y filtros */}
 
-            
+          
         <div className=" items-center justify-between mb-4">
             <strong>Giroscopio:</strong>
             <p className='flex'>Alpha (Z): {alpha.toFixed(2)}</p>
@@ -180,6 +180,13 @@ const ProductListPage: React.FC = () => {
             </button>
           </div>
         </div>
+
+   <button
+        onClick={() => history.push('/flash')}
+        className="flex mb-3 w-full justify-center items-center text-lg font-medium bg-purple-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-lg shadow transition"
+    >
+        Linterna
+    </button>
 
         <button
         onClick={() => history.push('/carrito')}
