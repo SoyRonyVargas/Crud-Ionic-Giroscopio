@@ -12,7 +12,9 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@awesome-cordova-plugins/flashlight": "^8.0.2",
     "@capacitor-community/sqlite": "^7.0.1",
+    "@capacitor/android": "^7.4.1",
     "@capacitor/app": "7.0.1",
     "@capacitor/core": "^7.4.1",
     "@capacitor/haptics": "7.0.1",
@@ -23,6 +25,7 @@
     "@ionic/react-router": "^8.5.0",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
+    "cordova-plugin-flashlight": "^3.2.0",
     "ionicons": "^7.4.0",
     "jeep-sqlite": "^2.8.0",
     "react": "19.0.0",

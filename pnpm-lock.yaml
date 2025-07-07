@@ -8,9 +8,15 @@ importers:
 
   .:
     dependencies:
+      '@awesome-cordova-plugins/flashlight':
+        specifier: ^8.0.2
+        version: 8.0.2(@awesome-cordova-plugins/core@8.0.2(rxjs@7.8.2))(rxjs@7.8.2)
       '@capacitor-community/sqlite':
         specifier: ^7.0.1
         version: 7.0.1(@capacitor/core@7.4.1)
+      '@capacitor/android':
+        specifier: ^7.4.1
+        version: 7.4.1(@capacitor/core@7.4.1)
       '@capacitor/app':
         specifier: 7.0.1
         version: 7.0.1(@capacitor/core@7.4.1)
@@ -41,6 +47,9 @@ importers:
       '@types/react-router-dom':
         specifier: ^5.3.3
         version: 5.3.3
+      cordova-plugin-flashlight:
+        specifier: ^3.2.0
+        version: 3.2.0
       ionicons:
         specifier: ^7.4.0
         version: 7.4.0
@@ -141,6 +150,17 @@ packages:
   '@ampproject/remapping@2.3.0':
     resolution: {integrity: sha512-30iZtAPgz+LTIYoeivqYo853f02jBYSd5uGnGpkFV0M3xOt9aN73erkgYAmZU43x4VfqcnLxW9Kpg3R5LC4YYw==}
     engines: {node: '>=6.0.0'}
+
+  '@awesome-cordova-plugins/core@8.0.2':
+    resolution: {integrity: sha512-GeNyTai3srbzR2A3XggurRRzFtBKBAnmTFDi8zpgLEFnuLRTeaZwQD4ma+AcgkIX/VrMGaLj+KJNV4wagsWS0w==}
+    peerDependencies:
+      rxjs: ^5.5.0 || ^6.5.0 || ^7.3.0
+
+  '@awesome-cordova-plugins/flashlight@8.0.2':
+    resolution: {integrity: sha512-XyuuX1QmTATTCJdqjZXch4ECHzk18ulfDuSqR6ClAKu/6HmTEoaG6wnE+plkXu6lABB9RCWPVI1PcdaAtIn9Fw==}
+    peerDependencies:
+      '@awesome-cordova-plugins/core': ^8.0.2
+      rxjs: ^5.5.0 || ^6.5.0 || ^7.3.0
 
   '@babel/code-frame@7.27.1':
     resolution: {integrity: sha512-cjQ7ZlQ0Mv3b47hABuTevyTuYN4i+loJKGeV9flcCgIK37cCXRh+L1bd3iBHlynerhQ7BhCkn2BPbQUL+rGqFg==}
@@ -654,6 +674,11 @@ packages:
     engines: {node: '>=16.0.0'}
     peerDependencies:
       '@capacitor/core': '>=7.0.0'
+
+  '@capacitor/android@7.4.1':
+    resolution: {integrity: sha512-/LxreKsXt6oZnS7gOpHz2WvRuZzwaLpGOKqomvBTliISTQaKEwqLkX1k665fqZquuJjP8RKnkz8thO6UZJTfbg==}
+    peerDependencies:
+      '@capacitor/core': ^7.4.0
 
   '@capacitor/app@7.0.1':
     resolution: {integrity: sha512-ArlVZAAla4MwQoKh26x2AaTDOBh5Vhp1VhMKR3RwqZSsZnazKTFGNrPbr9Ez5r1knnEDfApyjwp1uZnXK1WTYQ==}
@@ -1231,6 +1256,9 @@ packages:
   '@types/chai@4.3.20':
     resolution: {integrity: sha512-/pC9HAB5I/xMlc5FP77qjCnI16ChlJfW0tGa0IUcFn38VJrTV6DeZ60NU5KZBtaOZqjdpwTWohz5HU1RrhiYxQ==}
 
+  '@types/cordova@11.0.3':
+    resolution: {integrity: sha512-kyuRQ40/NWQVhqGIHq78Ehu2Bf9Mlg0LhmSmis6ZFJK7z933FRfYi8tHe/k/0fB+PGfCf95rJC6TO7dopaFvAg==}
+
   '@types/emscripten@1.40.1':
     resolution: {integrity: sha512-sr53lnYkQNhjHNN0oJDdUm5564biioI5DuOpycufDVK7D3y+GR3oUswe2rlwY1nPNyusHbrJ9WoTyIHl4/Bpwg==}
 
@@ -1711,6 +1739,10 @@ packages:
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+
+  cordova-plugin-flashlight@3.2.0:
+    resolution: {integrity: sha512-MnddnFBSk1UHWopsBQLppF3Xs8p/Vy3DiVjIcWO4gEtqfrNanF7Rn0+UBmO+FqtSxitioCLLrUoR/nYSA9MQjg==}
+    engines: {'0': {name: cordova, version: '>=3.0.0'}}
 
   core-js-compat@3.43.0:
     resolution: {integrity: sha512-2GML2ZsCc5LR7hZYz4AXmjQw8zuy2T//2QntwdnpuYI7jteT6GVYJL7F6C2C57R7gSYrcqVW3lAALefdbhBLDA==}
@@ -3607,6 +3639,17 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.12
       '@jridgewell/trace-mapping': 0.3.29
 
+  '@awesome-cordova-plugins/core@8.0.2(rxjs@7.8.2)':
+    dependencies:
+      '@types/cordova': 11.0.3
+      rxjs: 7.8.2
+
+  '@awesome-cordova-plugins/flashlight@8.0.2(@awesome-cordova-plugins/core@8.0.2(rxjs@7.8.2))(rxjs@7.8.2)':
+    dependencies:
+      '@awesome-cordova-plugins/core': 8.0.2(rxjs@7.8.2)
+      '@types/cordova': 11.0.3
+      rxjs: 7.8.2
+
   '@babel/code-frame@7.27.1':
     dependencies:
       '@babel/helper-validator-identifier': 7.27.1
@@ -4276,6 +4319,10 @@ snapshots:
       '@capacitor/core': 7.4.1
       jeep-sqlite: 2.8.0
 
+  '@capacitor/android@7.4.1(@capacitor/core@7.4.1)':
+    dependencies:
+      '@capacitor/core': 7.4.1
+
   '@capacitor/app@7.0.1(@capacitor/core@7.4.1)':
     dependencies:
       '@capacitor/core': 7.4.1
@@ -4839,6 +4886,8 @@ snapshots:
 
   '@types/chai@4.3.20': {}
 
+  '@types/cordova@11.0.3': {}
+
   '@types/emscripten@1.40.1': {}
 
   '@types/estree@1.0.8': {}
@@ -5384,6 +5433,8 @@ snapshots:
   confbox@0.1.8: {}
 
   convert-source-map@2.0.0: {}
+
+  cordova-plugin-flashlight@3.2.0: {}
 
   core-js-compat@3.43.0:
     dependencies:

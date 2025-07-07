@@ -7,6 +7,7 @@ import ProductList from './pages/ProductList';
 import ProductCreatePage from './pages/ProductCreatePage';
 import ProductEditPage from './pages/ProductEditPage';
 import CarritoPage from './pages/CarritoPage';
+import FlashlightPage from './pages/FlashlightPage';
 
 const App: React.FC = () => {
   return (
@@ -18,6 +19,7 @@ const App: React.FC = () => {
             <Route exact path="/products/new" component={ProductCreatePage} />
             <Route exact path="/products/edit/:id" component={ProductEditPage} />
             <Route exact path="/products" component={ProductList} />
+            <Route exact path="/flash" component={FlashlightPage} />
             <Route path="/carrito" component={CarritoPage} />
             <Redirect exact from="/" to="/products" />
           </Switch>
