@@ -1,4 +1,3 @@
-import { Preferences } from '@capacitor/preferences';
 
 export interface Producto {
   id: number;
@@ -9,88 +8,98 @@ export interface Producto {
   imagen_url: string;
 }
 
-const STORAGE_KEY = 'productos';
-
-const getAll = async (): Promise<Producto[]> => {
-  const { value } = await Preferences.get({ key: STORAGE_KEY });
-  return value ? JSON.parse(value) : [];
-};
-
-const saveAll = async (productos: Producto[]) => {
-  await Preferences.set({
-    key: STORAGE_KEY,
-    value: JSON.stringify(productos),
-  });
-};
-
-export const getProductos = async (): Promise<Producto[]> => {
-  return await getAll();
-};
-
-export const addProducto = async (producto: Omit<Producto, 'id'>): Promise<void> => {
-  const productos = await getAll();
-  const newId = productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 1;
-  const nuevoProducto: Producto = { id: newId, ...producto };
-  productos.push(nuevoProducto);
-  await saveAll(productos);
-};
-
-export const updateProducto = async (producto: Producto): Promise<void> => {
-  const productos = await getAll();
-  const index = productos.findIndex(p => p.id === producto.id);
-  if (index !== -1) {
-    productos[index] = producto;
-    await saveAll(productos);
-  }
-};
-
-export const deleteProducto = async (id: number): Promise<void> => {
-  const productos = await getAll();
-  const nuevosProductos = productos.filter(p => p.id !== id);
-  await saveAll(nuevosProductos);
-};
-
-export const getProductoById = async (id: number): Promise<Producto | undefined> => {
-    const productos = await getAll();
-    return productos.find(p => p.id === id);
-}
-
-export const clearProductos = async (): Promise<void> => {
-  await Preferences.remove({ key: STORAGE_KEY });
-};
-
 export interface ItemCarrito {
   productoId: number;
   cantidad: number;
+  id: number;
 }
 
-const CARRITO_KEY = 'carrito';
 
+const API_BASE_URL = 'https://687549acdd06792b9c97708b.mockapi.io';
+
+// Servicio para Productos
+export const getProductos = async (): Promise<Producto[]> => {
+  const response = await fetch(`${API_BASE_URL}/productos`);
+  return await response.json();
+};
+
+export const addProducto = async (producto: Omit<Producto, 'id'>): Promise<Producto> => {
+  const response = await fetch(`${API_BASE_URL}/productos`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(producto)
+  });
+  return await response.json();
+};
+
+export const updateProducto = async (producto: Producto): Promise<Producto> => {
+  const response = await fetch(`${API_BASE_URL}/productos/${producto.id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(producto)
+  });
+  return await response.json();
+};
+
+export const deleteProducto = async (id: number): Promise<void> => {
+  await fetch(`${API_BASE_URL}/productos/${id}`, {
+    method: 'DELETE'
+  });
+};
+
+export const getProductoById = async (id: number): Promise<Producto> => {
+  const response = await fetch(`${API_BASE_URL}/productos/${id}`);
+  return await response.json();
+};
+
+// Servicio para Carrito
 export const getCarrito = async (): Promise<ItemCarrito[]> => {
-  const { value } = await Preferences.get({ key: CARRITO_KEY });
-  return value ? JSON.parse(value) : [];
+  const response = await fetch(`${API_BASE_URL}/carrito`);
+  return await response.json();
 };
 
 export const saveCarrito = async (items: ItemCarrito[]): Promise<void> => {
-  await Preferences.set({
-    key: CARRITO_KEY,
-    value: JSON.stringify(items),
-  });
+  // Primero limpiamos el carrito existente
+  const currentItems = await getCarrito();
+  await Promise.all(currentItems.map(item => 
+    fetch(`${API_BASE_URL}/carrito/${item.id}`, { method: 'DELETE' })
+  ));
+  
+  // Luego agregamos los nuevos items
+  await Promise.all(items.map(item =>
+    fetch(`${API_BASE_URL}/carrito`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(item)
+    })
+  ));
 };
 
 export const addToCarrito = async (productoId: number): Promise<void> => {
   const carrito = await getCarrito();
-  const index = carrito.findIndex((item) => item.productoId === productoId);
-  
-  if (index !== -1) {
-    carrito[index].cantidad += 1;
-  } else {
-    carrito.push({ productoId, cantidad: 1 });
-  }
+  const existingItem = carrito.find(item => item.productoId === productoId);
 
-  await saveCarrito(carrito);
+  if (existingItem) {
+    await fetch(`${API_BASE_URL}/carrito/${existingItem.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        ...existingItem,
+        cantidad: existingItem.cantidad + 1
+      })
+    });
+  } else {
+    await fetch(`${API_BASE_URL}/carrito`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ productoId, cantidad: 1 })
+    });
+  }
 };
 
 export const clearCarrito = async (): Promise<void> => {
-  await Preferences.remove({ key: CARRITO_KEY });
+  const carrito = await getCarrito();
+  await Promise.all(carrito.map(item => 
+    fetch(`${API_BASE_URL}/carrito/${item.id}`, { method: 'DELETE' })
+  ));
 };
